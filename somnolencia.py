@@ -10,7 +10,24 @@ import time
 import dlib
 import cv2
 
-# define los valores límites para la apertura de los ojos y la boca,
+
+# ==================================================================
+from flask import Flask
+
+app = Flask(__name__)
+PORT = 5000
+DEBUG = False
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return "Not Found."
+
+
+@app.route('/', methods=['GET'])
+def index():
+    return "Hola Gente de CódigoFacilito"
+	# define los valores límites para la apertura de los ojos y la boca,
 # así como el número de frames que la apertura de los ojos debe estar
 # por debajo del límite de apertura, para disparar la alarma.
 EYE_AR_THRESH = 0.25
@@ -151,7 +168,10 @@ while True:
         cv2.putText(frame, "M.A.R.: {:.2f}".format(mouth_AR), (320, 50),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 255), 1)
 
-    # muestra la imagen procesada
+    if __name__ == '__main__':
+		app.run(port = PORT, debug = DEBUG)	
+	
+	# muestra la imagen procesada
     cv2.imshow("Frame", frame)
     key = cv2.waitKey(1) & 0xFF
 
@@ -161,3 +181,10 @@ while True:
 
 cv2.destroyAllWindows()
 vs.stop()
+
+
+
+# ==================================================================
+
+
+
